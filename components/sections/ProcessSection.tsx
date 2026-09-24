@@ -1,0 +1,5 @@
+export default function ProcessSection() {
+  return (
+      <section className="section process-section" id="how-it-works"><div className="container"><div className="center-heading reveal"><div className="eyebrow">A CLEAR PATH TO YOUR NEXT CHECKOUT</div><h2>Let’s make the switch simple.</h2><p>A conversation first. The right solution next.</p></div><div className="process-grid"><article className="reveal"><span className="step">01</span><h3>Tell us how you sell.</h3><p>Share your business type, current setup and what you want to improve.</p></article><article className="reveal"><span className="step">02</span><h3>Find your fit.</h3><p>Review hardware, processing options and a quote tailored to your needs.</p></article><article className="reveal"><span className="step">03</span><h3>Prepare to get paid.</h3><p>Work through setup, configuration and the next steps with the PrismaTech team.</p></article></div></div><div className="process-action reveal"><button className="button" data-action="call">Book a 15-minute call <span aria-hidden={true}>↗</span></button><p>Talk through your setup and next steps.</p></div></section>
+  );
+}
