@@ -70,21 +70,47 @@ document.querySelectorAll('[data-device]').forEach(link => link.addEventListener
   const deviceChoice = document.querySelector('#device-choice');
   if (deviceChoice) deviceChoice.value = link.dataset.device;
 }));
+function showPreloader() {
+  if (document.getElementById('pt-preloader-style')) {
+    /* styles already added */
+  } else {
+    const style = document.createElement('style');
+    style.id = 'pt-preloader-style';
+    style.textContent = '#pt-preloader{position:fixed;inset:0;z-index:10000;display:grid;place-items:center;background:rgba(7,4,14,.94);color:#fff;font-family:Satoshi,sans-serif}#pt-preloader p{margin:18px 0 0;font-size:16px;letter-spacing:.04em}.pt-preloader-spin{width:64px;height:64px;border-radius:50%;border:3px solid rgba(200,42,239,.25);border-top-color:#c82aef;display:block;margin:0 auto;animation:pt-spin .8s linear infinite}@keyframes pt-spin{to{transform:rotate(360deg)}}@media(prefers-reduced-motion:reduce){.pt-preloader-spin{animation:none;border-top-color:#c82aef}}';
+    document.head.appendChild(style);
+  }
+  if (document.getElementById('pt-preloader')) return;
+  const el = document.createElement('div');
+  el.id = 'pt-preloader';
+  el.setAttribute('role', 'status');
+  el.setAttribute('aria-live', 'polite');
+  el.innerHTML = '<div><span class="pt-preloader-spin" aria-hidden="true"></span><p>Sending your request</p></div>';
+  document.body.appendChild(el);
+}
+function openThankYou(details) {
+  try {
+    sessionStorage.setItem('pt-halloween-request', JSON.stringify(details));
+  } catch (error) {}
+  showPreloader();
+  const wait = window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 200 : 900;
+  window.setTimeout(() => {
+    window.location.href = '/lp/halloween/thank-you';
+  }, wait);
+}
 document.querySelector('#consultation-form')?.addEventListener('submit', event => {
   event.preventDefault();
   const form = event.currentTarget;
   if (!form.reportValidity()) return;
   const data = new FormData(form);
-  const body = `Hello PrismaTech,\n\nI'd like a quote for a POS and payment solution for my business.\n\nName: ${data.get('name')}\nBusiness: ${data.get('business')}\nBusiness type: ${data.get('industry')}\nInterested in: ${data.get('device')}\n\n${data.get('message') || 'Please help me find the right setup.'}\n\nThank you.`;
-  const mailto = 'mailto:info@prismatechinc.com?subject=' + encodeURIComponent('Quick POS quote — ' + data.get('business')) + '&body=' + encodeURIComponent(body);
-  const status = document.querySelector('#form-status');
-  if (status) {
-    status.hidden = false;
-    status.textContent = 'Your email draft is ready. Complete the request by sending it from your email app. If it did not open, use the link below or call us.';
-  }
-  const fallback = document.querySelector('#email-fallback');
-  if (fallback) { fallback.href = mailto; fallback.hidden = false; }
-  window.location.href = mailto;
+  openThankYou({
+    name: String(data.get('name') || ''),
+    email: String(data.get('email') || ''),
+    business: String(data.get('business') || ''),
+    businessType: String(data.get('industry') || ''),
+    request: 'POS quote',
+    interestedIn: String(data.get('device') || ''),
+    message: String(data.get('message') || ''),
+  });
 });
 
 // Conversion actions use separate, non-personal analytics events.
@@ -111,7 +137,7 @@ function openRequest(mode, source) {
   document.querySelector('#request-timing').hidden = review;
   document.querySelector('#request-context-title').textContent = review ? 'What would you like help understanding? (optional)' : 'Anything you’d like to discuss? (optional)';
   document.querySelector('#request-submit').firstChild.textContent = review ? 'Prepare my review request ' : 'Prepare my call request ';
-  document.querySelector('#request-footnote').textContent = review ? 'Opens an email draft for you to review and send. Please don’t enter card numbers, bank details or other sensitive information here.' : 'Opens an email draft for you to review and send. Your call is confirmed only when the team replies.';
+  document.querySelector('#request-footnote').textContent = 'You’ll see a confirmation page next. Please don’t enter card numbers, bank details or other sensitive information here.';
   document.querySelector('#request-status').hidden = true;
   document.querySelector('#request-fallback').hidden = true;
   requestDialog.showModal();
@@ -169,14 +195,18 @@ document.querySelector('#request-form').addEventListener('submit', event => {
   if (!event.currentTarget.reportValidity()) return;
   const data = new FormData(event.currentTarget);
   const review = requestMode === 'review';
-  const subject = (review ? 'Free statement review request' : '15-minute call request') + ' — ' + data.get('business');
-  const timing = review ? '' : `\nPreferred day, time and time zone: ${data.get('timing') || 'Please suggest a time'}\n`;
-  const body = `Hello PrismaTech,\n\nI would like to ${review ? 'request a free review of my processing statement. Please let me know the next steps for sharing it.' : 'arrange a 15-minute call about my POS and payment setup. Please confirm availability.'}\n\nName: ${data.get('name')}\nBusiness: ${data.get('business')}${timing}\n\n${data.get('context') || ''}\n\nThank you.`;
-  const mailto = 'mailto:info@prismatechinc.com?subject=' + encodeURIComponent(subject) + '&body=' + encodeURIComponent(body);
-  const status = document.querySelector('#request-status'); status.hidden = false; status.textContent = 'Your request is prepared. Send the draft from your email app to contact the team.';
-  const fallback = document.querySelector('#request-fallback'); fallback.href = mailto; fallback.hidden = false;
+  const timing = String(data.get('timing') || '');
+  const context = String(data.get('context') || '');
   trackConversion(review ? 'statement_review_draft' : 'book_call_draft', 'request_dialog');
-  window.location.href = mailto;
+  openThankYou({
+    name: String(data.get('name') || ''),
+    email: String(data.get('email') || ''),
+    business: String(data.get('business') || ''),
+    businessType: '',
+    request: review ? 'Statement review' : '15-minute call',
+    interestedIn: review ? '' : timing,
+    message: context,
+  });
 });
 const industries = {
   restaurants: { title: 'More hospitality.\nLess back-and-forth.', kicker: 'FROM FIRST ORDER TO FINAL BILL', description: 'Take payments to the table with Clover Flex, or keep counter service compact with Clover Mini. Build a setup around the way your guests order and pay.', bullets: ['Tableside or counter checkout', 'Contactless payment options', 'Receipt and reporting workflows'], image: '/images/scene-restaurants.webp', alt: 'Waiter presenting a Clover Flex to a customer at a café table', note: 'Clover Flex · Take checkout to the table' },
