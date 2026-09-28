@@ -1,52 +1,18 @@
 export default function Hero() {
   return (
-    <section className="bf-hero" aria-labelledby="hero-heading">
-        <div className="bf-hero-card">
-          <img
-            className="bf-hero-art"
-            src="/images/herosection.png"
-            width={1672}
-            height={941}
-            alt="PAX A800 payment terminal wrapped in a Black Friday ribbon"
-          />
-          <div className="bf-hero-inner">
-          <p className="bf-badge"><i aria-hidden={true}></i>Ready For Your Biggest Sales Day</p>
-          <div className="bf-hero-grid">
-            <div className="bf-hero-copy">
-              <h1 id="hero-heading">Smarter<br />Payments</h1>
-              <p className="bf-lead">Power every sale with reliable payment processing and a POS that works the way your business does.</p>
-              <div className="bf-actions">
-                <button className="bf-btn bf-btn-fill" data-action="finder" type="button">Find My Perfect POS</button>
-                <a className="bf-btn bf-btn-line" href="#solutions">Explore The Devices</a>
-              </div>
-            </div>
-            <div className="bf-hero-right">
-              <h2>Black<br />Friday</h2>
-              <p className="bf-kicker">Make the most of the rush.<br />Keep your checkout simple.</p>
-              <div className="bf-pills">
-                <span><StoreIcon /> In-store &amp; online</span>
-                <span><SupportIcon /> Human support</span>
-              </div>
-            </div>
-          </div>
-          </div>
-        </div>
-    </section>
-  );
-}
-
-function StoreIcon() {
-  return (
-    <svg viewBox="0 0 16 16" aria-hidden={true}>
-      <path d="M2 6.5 3.2 3h9.6L14 6.5M3 6.5V13h10V6.5M6.5 13V9h3v4" fill="none" stroke="currentColor" strokeWidth="1.3" strokeLinejoin="round" />
-    </svg>
-  );
-}
-
-function SupportIcon() {
-  return (
-    <svg viewBox="0 0 16 16" aria-hidden={true}>
-      <path d="M3 8a5 5 0 0 1 10 0v3.2a1.3 1.3 0 0 1-1.3 1.3H10M3 8v3.2A1.3 1.3 0 0 0 4.3 12.5H6" fill="none" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round" />
-    </svg>
+      <section className="hero" aria-labelledby="hero-heading">
+      <div className="hero-backdrop" aria-hidden={true}></div><div className="container hero-inner">
+      <div className="hero-copy">
+      <h1 id="hero-heading">No tricks.<br />Just smarter<br /><em>payments.</em></h1>
+      <p>Keep the thrills in the season.<br className="desktop-break" /> Keep your checkout simple.</p>
+      <p className="hero-description">Power every sale with reliable payment processing and a POS that works the way your business does.</p>
+      <div className="hero-actions"><button className="button" data-action="finder">Find my perfect POS <span aria-hidden={true}>↗</span></button><a className="text-link" href="#solutions">Explore the devices <span aria-hidden={true}>↓</span></a></div>
+      <div className="hero-proof"><span>✓ &nbsp; In-store & online</span><span>✓ &nbsp; Human support</span></div>
+      </div>
+      <div className="hero-product"><div className="product-orbit" aria-hidden={true}></div><img className="floating-flex" src="/images/clover-flex.png" width={426} height={357} alt="Clover Flex handheld payment terminal with touchscreen and built-in receipt printer" />
+      <div className="floating-note"><span className="contactless-icon" aria-hidden={true}><svg viewBox="0 0 28 28" fill="none"><path d="M8 10a9 9 0 0 1 0 8m5-12a17 17 0 0 1 0 16m5-20a25 25 0 0 1 0 24" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/></svg></span><div><strong>Tap. Pay. Keep moving.</strong><small>Contactless checkout, wherever you are.</small></div></div>
+      <div className="hero-device-label"><div><strong>CLOVER FLEX</strong><small>Small device.<br />More possibilities.</small></div><span className="device-label-rule" aria-hidden={true}></span></div>
+      </div></div><div className="container hero-bottom"><span>BUILT FOR BUSINESS. READY FOR THE RUSH.</span><a href="#why-prisma" aria-label="Scroll to why PrismaTech">SCROLL TO EXPLORE <span aria-hidden={true}>↓</span></a></div>
+      </section>
   );
 }
