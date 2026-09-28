@@ -87,22 +87,41 @@ function showPreloader() {
   el.innerHTML = '<div><span class="pt-preloader-spin" aria-hidden="true"></span><p>Sending your request</p></div>';
   document.body.appendChild(el);
 }
-function openThankYou(details) {
-  try {
-    sessionStorage.setItem('pt-halloween-request', JSON.stringify(details));
-  } catch (error) {}
+async function submitLead(form, details) {
   showPreloader();
-  const wait = window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 200 : 900;
-  window.setTimeout(() => {
+  const status = form.querySelector('[role="status"]');
+  const button = form.querySelector('[type="submit"]');
+  if (status) status.hidden = true;
+  if (button) button.disabled = true;
+  try {
+    const response = await fetch('/api/lead', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+      body: JSON.stringify(details),
+    });
+    const payload = await response.json().catch(() => ({}));
+    if (!response.ok || !payload.ok) throw new Error(payload.error || 'send failed');
+    try {
+      sessionStorage.setItem('pt-halloween-request', JSON.stringify(details));
+    } catch (error) {}
     window.location.href = '/lp/halloween/thank-you';
-  }, wait);
+  } catch (error) {
+    document.getElementById('pt-preloader')?.remove();
+    if (button) button.disabled = false;
+    if (status) {
+      status.hidden = false;
+      status.textContent = error instanceof Error && error.message && error.message !== 'send failed'
+        ? error.message
+        : 'That didn’t send. Please try again, or email info@prismatechinc.com.';
+    }
+  }
 }
 document.querySelector('#consultation-form')?.addEventListener('submit', event => {
   event.preventDefault();
   const form = event.currentTarget;
   if (!form.reportValidity()) return;
   const data = new FormData(form);
-  openThankYou({
+  submitLead(form, {
     name: String(data.get('name') || ''),
     email: String(data.get('email') || ''),
     business: String(data.get('business') || ''),
@@ -136,6 +155,7 @@ function openRequest(mode, source) {
   document.querySelector('#request-description').textContent = review ? 'Start with a conversation about your current fees. The team will explain how to share a statement for review.' : 'Share a preferred time. The team will confirm availability with you.';
   document.querySelector('#request-timing').hidden = review;
   document.querySelector('#request-context-title').textContent = review ? 'What would you like help understanding? (optional)' : 'Anything you’d like to discuss? (optional)';
+  document.querySelector('#request-kind').value = review ? 'Statement review' : '15-minute call';
   document.querySelector('#request-submit').firstChild.textContent = review ? 'Prepare my review request ' : 'Prepare my call request ';
   document.querySelector('#request-footnote').textContent = 'You’ll see a confirmation page next. Please don’t enter card numbers, bank details or other sensitive information here.';
   document.querySelector('#request-status').hidden = true;
@@ -198,7 +218,7 @@ document.querySelector('#request-form').addEventListener('submit', event => {
   const timing = String(data.get('timing') || '');
   const context = String(data.get('context') || '');
   trackConversion(review ? 'statement_review_draft' : 'book_call_draft', 'request_dialog');
-  openThankYou({
+  submitLead(event.currentTarget, {
     name: String(data.get('name') || ''),
     email: String(data.get('email') || ''),
     business: String(data.get('business') || ''),

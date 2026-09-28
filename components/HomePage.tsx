@@ -3,7 +3,6 @@
 import { useEffect } from "react";
 import { initHomePage } from "@/lib/home-interactions";
 import SkipLink from "@/components/sections/SkipLink";
-import SeasonStrip from "@/components/sections/SeasonStrip";
 import Header from "@/components/sections/Header";
 import Hero from "@/components/sections/Hero";
 import CapabilityStrip from "@/components/sections/CapabilityStrip";
@@ -40,7 +39,6 @@ export default function HomePage() {
   return (
     <>
       <SkipLink />
-      <SeasonStrip />
       <Header />
       <main id="main">
         <Hero />
