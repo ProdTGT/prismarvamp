@@ -1,0 +1,319 @@
+/* Homepage utilities are scoped so they do not restyle the other landing pages. */
+@layer theme, base, components, utilities;
+@import "tailwindcss/theme.css" layer(theme);
+@import "tailwindcss/utilities.css" layer(utilities) important;
+@source "../components/prisma-agency";
+@source "./**/*.tsx";
+
+.prisma-home {
+  min-height: 100vh;
+  background: #07070c;
+  color: #f5f5f5;
+  font-family: "Plus Jakarta Sans", ui-sans-serif, system-ui, sans-serif;
+  letter-spacing: 0;
+}
+
+/* Tailwind preflight is not loaded, so native buttons keep the gray button face. */
+.prisma-home :is(button, input[type="submit"], input[type="button"]) {
+  background-color: transparent;
+  color: inherit;
+}
+
+/* Figma node 2:1251 — hero headline “Amplify your brand…” (Prisma Tech) */
+.prisma-hero-h1 {
+  font-family: "Plus Jakarta Sans", ui-sans-serif, system-ui, sans-serif;
+  font-weight: 500;
+  font-style: normal;
+  font-size: clamp(36px, 5.6vw, 107.66px);
+  /* 139.96 / 107.66 — keeps Figma ratio when font scales */
+  line-height: 130.02%;
+  letter-spacing: 0;
+  /* Figma leading-trim: NONE — not widely supported in browsers yet */
+  vertical-align: middle;
+  text-align: left;
+  font-synthesis: none;
+  -webkit-font-smoothing: antialiased;
+  text-shadow:
+    0 2px 3px rgba(0, 0, 0, 0.45),
+    0 8px 48px rgba(0, 0, 0, 0.35),
+    0 0 80px rgba(188, 19, 254, 0.12);
+}
+
+/* About / expertise — below hero (dark grid + cards) */
+.about-expertise-section {
+  background-color: #000000;
+  background-image: repeating-linear-gradient(
+    90deg,
+    transparent,
+    transparent 71px,
+    rgba(255, 255, 255, 0.035) 71px,
+    rgba(255, 255, 255, 0.035) 72px
+  );
+}
+
+/* Our Core Services — grid + bottom purple wash */
+.core-services-section {
+  position: relative;
+  background-color: #000000;
+  background-image: repeating-linear-gradient(
+    90deg,
+    transparent,
+    transparent 71px,
+    rgba(255, 255, 255, 0.035) 71px,
+    rgba(255, 255, 255, 0.035) 72px
+  );
+}
+
+.core-services-section::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  border-radius: inherit;
+  background: radial-gradient(ellipse 85% 60% at 50% 100%, rgba(188, 19, 254, 0.12), transparent 58%);
+}
+
+/*
+  Figma hero content group (node 4:1345): 1388.55 × 672.44 @ left 241.45, top 89.07
+  on 1860px-wide hero — scales down on narrow viewports.
+*/
+.hero-figma-frame {
+  box-sizing: border-box;
+  width: min(100%, 1388.55px);
+  min-height: min(672.44px, 58vh);
+  padding-top: clamp(32px, 4.7vw, 89.07px);
+  padding-left: clamp(16px, 12.98vw, 241.45px);
+  padding-right: clamp(16px, 2rem, 32px);
+  opacity: 1;
+}
+
+@media (max-width: 639px) {
+  .hero-figma-frame {
+    min-height: min(480px, 68dvh);
+    padding-top: clamp(16px, 5vw, 28px);
+    /* Figma left offset scales poorly on narrow phones — keep readable line length */
+    padding-left: max(12px, 3.5vw);
+    padding-right: max(12px, 3.5vw);
+  }
+
+  .prisma-hero-h1 {
+    font-size: clamp(26px, 7.2vw, 40px);
+    line-height: 1.22;
+  }
+}
+
+/* Procerus: files live in `public/Procerus/` → served from `/Procerus/` (Vite). */
+@font-face {
+  font-family: Procerus;
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src:
+    local("Procerus Regular"),
+    url("/Procerus/Procerus%20Regular.ttf") format("truetype");
+}
+
+/* Figma MCP mask helpers (Tailwind does not emit these by default) */
+@layer utilities {
+  /* Hide scrollbars but keep overflow scroll (e.g. lead popup form column) */
+  .scrollbar-hide {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;
+    width: 0;
+    height: 0;
+  }
+
+  .mask-alpha {
+    mask-type: alpha;
+    -webkit-mask-type: alpha;
+  }
+  .mask-intersect {
+    mask-composite: intersect;
+    -webkit-mask-composite: source-in;
+  }
+  .mask-no-clip {
+    mask-clip: no-clip;
+    -webkit-mask-clip: no-clip;
+  }
+  .mask-no-repeat {
+    mask-repeat: no-repeat;
+    -webkit-mask-repeat: no-repeat;
+  }
+}
+
+@keyframes finaxis-float {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-12px);
+  }
+}
+
+.animate-finaxis-float {
+  animation: finaxis-float 5s ease-in-out infinite;
+}
+
+.animate-finaxis-float-delayed {
+  animation: finaxis-float 5.5s ease-in-out 0.4s infinite;
+}
+
+/* Hero headline: fluid font-size (no transform: scale) so nothing paints behind the nav */
+.finaxis-hero-green-wrap {
+  display: block;
+  line-height: 0.9;
+}
+
+/* Hero main line: ultra-condensed caps like Figma “WE EQUIP BUSINESSES…” block */
+.finaxis-hero-green-wrap p,
+.finaxis-hero-display {
+  font-family: "Bebas Neue", "Anton", Impact, "Arial Narrow", sans-serif;
+  font-weight: 400;
+  font-size: clamp(5rem, 11.5cqi, 17.5rem);
+  line-height: 0.82;
+  letter-spacing: -0.035em;
+  font-synthesis: none;
+  -webkit-font-smoothing: antialiased;
+}
+
+.finaxis-hero-headline-cq {
+  container-type: inline-size;
+}
+
+/* Figma 76:142 — Procerus headline size from Finaxis-Final */
+.finaxis-hero-procerus-figma {
+  font-family: Procerus, "Arial Narrow", ui-sans-serif, system-ui, sans-serif;
+  font-weight: 400;
+  font-style: normal;
+  font-size: 352.2px;
+  line-height: 1;
+  letter-spacing: 0.01em;
+  color: #00511e;
+  font-synthesis: none;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Hero tagline “Through Smart Financing” — white outline on letterforms */
+.finaxis-hero-through-financing {
+  -webkit-text-stroke: 0.55px rgb(255, 255, 255);
+  paint-order: stroke fill;
+  text-shadow:
+    0 0 1px rgba(255, 255, 255, 0.85),
+    0.4px 0 0 rgba(255, 255, 255, 0.45),
+    -0.4px 0 0 rgba(255, 255, 255, 0.45),
+    0 0.4px 0 rgba(255, 255, 255, 0.45),
+    0 -0.4px 0 rgba(255, 255, 255, 0.45);
+  font-synthesis: none;
+  -webkit-font-smoothing: antialiased;
+}
+
+.finaxis-hero-serif-figma {
+  -webkit-text-stroke: 0.45px rgb(255, 255, 255);
+  paint-order: stroke fill;
+  text-shadow:
+    0 0 1px rgb(255, 255, 255),
+    -0.35px -0.35px 0 rgb(255, 255, 255),
+    0.35px -0.35px 0 rgb(255, 255, 255),
+    -0.35px 0.35px 0 rgb(255, 255, 255),
+    0.35px 0.35px 0 rgb(255, 255, 255);
+}
+
+/*
+  Procerus display typography (Figma):
+  font-family: Procerus; weight 400; Regular; 239.17px; line-height 100%;
+  letter-spacing 1%; uppercase; vertical-align middle; leading-trim NONE
+*/
+.typography-procerus-display,
+.finaxis-card-display-headline {
+  /* Avoid “display” fallbacks that look like the real Procerus when the real font fails to load */
+  font-family: Procerus, "Arial Narrow", ui-sans-serif, system-ui, sans-serif;
+  font-weight: 400;
+  font-style: normal;
+  font-size: 239.17px;
+  line-height: 100%;
+  letter-spacing: 0.01em; /* 1% (tracks with font-size when using modifiers) */
+  text-transform: uppercase;
+  vertical-align: middle;
+  font-synthesis: none;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Big gradient brand line: extra air between letters (Procerus is ultra-condensed) */
+.typography-procerus-display--spread {
+  letter-spacing: 0.12em;
+}
+
+/* Arc / small container (parent uses container-type: size + cqi) */
+.typography-procerus-display--arc {
+  font-size: clamp(10px, 22cqi, 239.17px);
+}
+
+/* “SERVING BUSINESSES” — Procerus from `public/Procerus/` */
+.finaxis-serving-businesses-type {
+  font-family: Procerus, "Arial Narrow", ui-sans-serif, system-ui, sans-serif;
+  font-weight: 400;
+  font-style: normal;
+  font-size: 239.168px;
+  line-height: 0.82;
+  letter-spacing: 0.01em;
+  text-transform: uppercase;
+  color: #00511e;
+  font-synthesis: none;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Bottom-left “Our Notable Work” capability tags — lighter weight, room to breathe */
+.finaxis-notable-work-services {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  column-gap: 22px;
+  row-gap: 22px;
+  font-family: "Satoshi", ui-sans-serif, system-ui, sans-serif;
+  font-weight: 500;
+  font-size: 36px;
+  line-height: 1.5;
+  letter-spacing: -0.015em;
+  color: #5a5a5a;
+  margin: 0;
+  font-synthesis: none;
+  -webkit-font-smoothing: antialiased;
+}
+
+.finaxis-notable-work-sep {
+  font-weight: 400;
+  font-size: 0.72em;
+  line-height: 1;
+  color: #7a7a7a;
+  opacity: 0.95;
+  user-select: none;
+}
+
+/* Serving-businesses tab panel: avoid Procerus/display inheritance & broken % insets from display:contents */
+.finaxis-industry-panel {
+  isolation: isolate;
+  text-transform: none;
+  font-feature-settings: normal;
+}
+
+.finaxis-industry-panel__headline {
+  font-family: Caladea, Georgia, "Times New Roman", serif;
+  font-feature-settings: normal;
+  text-transform: none;
+  font-synthesis: none;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  html {
+    scroll-behavior: smooth;
+  }
+}
+
+.prisma-home {
+  max-width: 100%;
+  overflow-x: hidden;
+}

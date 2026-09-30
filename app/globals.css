@@ -16,15 +16,18 @@ button.text-link{color:inherit;background:none;border:0;border-bottom:1px solid 
 @media(max-width:600px){.hero-product{height:440px;margin-top:20px}.floating-flex{top:0}.floating-note{top:235px;left:1%;padding:13px 16px}.floating-note strong{font-size:12px}.floating-note small{font-size:11px;max-width:205px}.hero-device-label{top:auto;bottom:22px;right:3%;left:auto;padding:13px 19px;min-width:218px}.hero-device-label strong{font-size:12px}.hero-device-label small{font-size:13px;line-height:1.5;margin-top:5px}.hero-device-label small br{display:none}.device-label-rule{height:37px}.hero-backdrop{background-size:auto 720px}.hero-bottom{gap:25px;line-height:1.7}.hero-bottom>span{max-width:170px}.hero-bottom a{font-size:10px;max-width:130px}.pain-section{padding-bottom:30px}.why-section{padding-top:30px}.lineup-helper{gap:20px;font-size:13px;margin:0 0 30px;justify-content:space-between}.lineup-helper .text-link{font-size:13px}.industry-tabs{gap:17px}.industry-tabs button{font-size:13px}.industry-panel{grid-template-columns:1fr;padding-top:34px;gap:40px}.industry-panel h3{font-size:32px}.industry-device{gap:12px}.industry-device img{max-height:245px;width:310px}.industry-device>span{font-size:11px}.industry-device small{font-size:13px}.pricing-grid{grid-template-columns:1fr;gap:30px}.pricing-grid article{padding-top:24px}.pricing-grid h3{font-size:25px}.pricing-grid p{font-size:15px}.comparison-wrap th,.comparison-wrap td{padding:18px;font-size:13px}.comparison-wrap table{min-width:610px}.comparison-action p{font-size:14px}.process-action{text-align:left;padding-inline:20px;margin-top:35px}.process-action .button{margin-inline:0}.site-dialog{padding:27px 22px;max-height:calc(100dvh - 30px)}.site-dialog .eyebrow{font-size:11px;margin-right:25px}.site-dialog h2{font-size:29px;max-width:290px}.dialog-close{top:10px;right:10px}.dialog-lead{font-size:14px}.site-dialog input,.site-dialog select,.site-dialog textarea{font-size:16px}.quiz-option strong{font-size:14px}.quiz-option small{font-size:12px}.quiz-option input{width:18px;height:18px}.quiz-result-media{height:200px}.quiz-result-media img{max-height:190px}.site-dialog .form-grid{grid-template-columns:1fr}.hero .button{font-size:13px}}
 @media(prefers-reduced-motion:reduce){.bat-particle{display:none!important}}
 [hidden]{display:none!important}
+body:not(:has(.prisma-home)) .container{width:min(1240px,calc(100% - 96px))!important;max-width:none!important;margin-inline:auto!important}
+@media(max-width:1100px){body:not(:has(.prisma-home)) .container{width:calc(100% - 56px)!important}}
+@media(max-width:800px){body:not(:has(.prisma-home)) .container{width:calc(100% - 40px)!important}}
 
 /* Supplied Aeonik Bold for every heading, including dialogs and cards. */
-h1,h2,h3,h4,h5,h6{font-family:var(--heading);font-weight:700!important}
+body:not(:has(.prisma-home)) :is(h1,h2,h3,h4,h5,h6){font-family:var(--heading);font-weight:700!important}
 .contact-phone{font-family:var(--body)}
 
 /* Readable spacing for the supplied fonts, on every screen size. */
 body{letter-spacing:.02em}
 button,input,select,textarea{letter-spacing:.02em}
-h1,h2,h3,h4,h5,h6{letter-spacing:.015em!important;text-transform:capitalize}
+body:not(:has(.prisma-home)) :is(h1,h2,h3,h4,h5,h6){letter-spacing:.015em!important;text-transform:capitalize}
 summary{letter-spacing:.02em;text-transform:capitalize}
 
 /* Real-world environments in the industry tabs. */
