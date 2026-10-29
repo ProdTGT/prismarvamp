@@ -54,8 +54,8 @@ export default function Footer() {
           <div className="bf-legal">
             <p>© Copyright 2026 <strong>PrismaTech Inc.</strong> All Rights Reserved.</p>
             <p>
-              <a href="#contact">Terms of Service</a>
-              <a href="#contact">Privacy Policy</a>
+              <a href="/terms-of-service">Terms of Service</a>
+              <a href="/privacy-policy">Privacy Policy</a>
             </p>
             <button id="motion-toggle" className="bf-visually-hidden" type="button" aria-pressed={false}>
               Pause animations

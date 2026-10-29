@@ -3,7 +3,7 @@ import TermsOfServicePage from "@/components/prisma-agency/legal/TermsOfServiceP
 
 export const metadata: Metadata = {
   title: "Terms of Service | PrismaTech Inc.",
-  description: "Rules and conditions for using the PrismaTech Inc. website.",
+  description: "Terms of Service for prismatechinc.com and communications with PrismaTech Inc.",
 };
 
 export default function Page() {

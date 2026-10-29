@@ -486,8 +486,8 @@ export default function AgencyHome({ fontClass }: { fontClass: string }) {
             © Copyright 2026 <strong>PrismaTech Inc.</strong> All Rights Reserved.
           </p>
           <p>
-            <a href="#contact">Terms of Service</a>
-            <a href="#contact">Privacy Policy</a>
+            <a href="/terms-of-service">Terms of Service</a>
+            <a href="/privacy-policy">Privacy Policy</a>
           </p>
         </div>
       </footer>

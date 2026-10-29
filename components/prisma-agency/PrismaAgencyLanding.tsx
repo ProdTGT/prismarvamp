@@ -153,7 +153,7 @@ export default function PrismaAgencyLanding() {
   const [leadModalOpen, setLeadModalOpen] = useState(false);
   const [mobileNavOpen, setMobileNavOpen] = useState(false);
   const [leadSubmitted, setLeadSubmitted] = useState(false);
-  const [leadForm, setLeadForm] = useState({ name: "", email: "", phone: "", message: "" });
+  const [leadForm, setLeadForm] = useState({ name: "", email: "", phone: "", message: "", smsConsent: false });
   const [leadSubmitting, setLeadSubmitting] = useState(false);
   const [leadSubmitError, setLeadSubmitError] = useState<string | null>(null);
 
@@ -220,7 +220,7 @@ export default function PrismaAgencyLanding() {
     setLeadModalOpen(false);
     setLeadSubmitted(false);
     setLeadSubmitError(null);
-    setLeadForm({ name: "", email: "", phone: "", message: "" });
+    setLeadForm({ name: "", email: "", phone: "", message: "", smsConsent: false });
   }, []);
 
   const closeMobileNav = useCallback(() => setMobileNavOpen(false), []);
@@ -229,7 +229,7 @@ export default function PrismaAgencyLanding() {
     setMobileNavOpen(false);
     setLeadSubmitted(false);
     setLeadSubmitError(null);
-    setLeadForm({ name: "", email: "", phone: "", message: "" });
+    setLeadForm({ name: "", email: "", phone: "", message: "", smsConsent: false });
     setLeadModalOpen(true);
   }, []);
 
@@ -297,9 +297,12 @@ export default function PrismaAgencyLanding() {
     setLeadSubmitError(null);
     setLeadSubmitting(true);
     const result = await submitPrismatechLead({
-      ...leadForm,
+      name: leadForm.name,
+      email: leadForm.email,
+      phone: leadForm.phone.trim() || "—",
       source: "popup",
       message: leadForm.message.trim() || "Free consultation request (agency landing popup).",
+      smsConsent: leadForm.smsConsent,
     });
     setLeadSubmitting(false);
     if (result.ok === false) {
@@ -1398,6 +1401,18 @@ export default function PrismaAgencyLanding() {
                     </span>
                   </button>
                 </form>
+                <p className="mx-auto mt-4 max-w-[640px] text-center text-[12px] leading-relaxed text-[#8a8a8a] sm:text-[13px]">
+                  By clicking Get Started, you agree to receive emails from PrismaTech Inc. about merchant services,
+                  pricing programs and offers. You can unsubscribe at any time. See our{" "}
+                  <Link href="/privacy-policy" className="text-[#c4c4c4] underline underline-offset-2 transition hover:text-white">
+                    Privacy Policy
+                  </Link>{" "}
+                  and{" "}
+                  <Link href="/terms-of-service" className="text-[#c4c4c4] underline underline-offset-2 transition hover:text-white">
+                    Terms of Service
+                  </Link>
+                  .
+                </p>
                 {newsletterStatus === "ok" && <p className="mt-4 text-sm text-emerald-400">Thanks — you&apos;re subscribed.</p>}
                 {newsletterStatus === "err" && <p className="mt-4 text-sm text-red-400">{newsletterErr}</p>}
               </div>
@@ -1539,7 +1554,7 @@ export default function PrismaAgencyLanding() {
                 role="dialog"
                 aria-modal="true"
                 aria-labelledby="agency-lead-title"
-                className="fixed top-32 left-1/2 z-[9999] flex max-h-[min(720px,calc(100dvh-10rem))] w-[calc(100%-1rem)] max-w-[min(94vw,900px)] -translate-x-1/2 flex-col overflow-hidden rounded-2xl border shadow-[0_32px_100px_rgba(0,0,0,0.65),0_0_0_1px_rgba(188,19,254,0.12)_inset] sm:w-[calc(100%-1.25rem)] sm:rounded-[28px]"
+                className="fixed top-1/2 left-1/2 z-[9999] flex max-h-[calc(100dvh-2rem)] w-[calc(100%-1rem)] max-w-[min(94vw,900px)] -translate-x-1/2 -translate-y-1/2 flex-col overflow-hidden rounded-2xl border shadow-[0_32px_100px_rgba(0,0,0,0.65),0_0_0_1px_rgba(188,19,254,0.12)_inset] sm:w-[calc(100%-1.25rem)] sm:rounded-[28px]"
                 style={{
                   backgroundColor: "#0c0c0c",
                   borderColor: "rgba(188, 19, 254, 0.32)",
@@ -1600,14 +1615,14 @@ export default function PrismaAgencyLanding() {
                   </div>
 
                   {/* Form column */}
-                  <div className="scrollbar-hide relative flex min-h-0 flex-col overflow-y-auto overscroll-contain bg-[#0a0a0a] p-5 pt-12 sm:p-6 sm:pt-14 md:min-h-0 md:pt-6">
+                  <div className="relative flex min-h-0 flex-1 flex-col overflow-hidden bg-[#0a0a0a] p-5 pt-12 sm:p-6 sm:pt-14 md:pt-6">
                     <div
                       className="pointer-events-none absolute inset-0 opacity-100"
                       style={{
                         background: `radial-gradient(ellipse 100% 80% at 100% 0%, rgba(188, 19, 254, 0.09), transparent 52%)`,
                       }}
                     />
-                    <div className="relative z-[1]">
+                    <div className="relative z-[1] flex min-h-0 flex-1 flex-col">
                       <p id="agency-lead-title" className="text-xl font-bold tracking-tight text-white sm:text-2xl">
                         Get a free consultation
                       </p>
@@ -1638,7 +1653,8 @@ export default function PrismaAgencyLanding() {
                           </button>
                         </div>
                       ) : (
-                        <form onSubmit={onLeadPopupSubmit} className="mt-6 flex flex-col gap-3.5 sm:gap-4">
+                        <form onSubmit={onLeadPopupSubmit} className="mt-4 flex min-h-0 flex-auto flex-col">
+                          <div className="scrollbar-hide flex min-h-0 flex-auto flex-col gap-3 overflow-y-auto overscroll-contain">
                           {(
                             [
                               {
@@ -1647,6 +1663,7 @@ export default function PrismaAgencyLanding() {
                                 name: "name" as const,
                                 type: "text" as const,
                                 autoComplete: "name" as const,
+                                required: true,
                                 ph: "Your name",
                                 icon: (
                                   <svg className="size-[18px]" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" aria-hidden>
@@ -1661,6 +1678,7 @@ export default function PrismaAgencyLanding() {
                                 name: "email" as const,
                                 type: "email" as const,
                                 autoComplete: "email" as const,
+                                required: true,
                                 ph: "you@company.com",
                                 icon: (
                                   <svg className="size-[18px]" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" aria-hidden>
@@ -1671,10 +1689,11 @@ export default function PrismaAgencyLanding() {
                               },
                               {
                                 id: "lead-phone",
-                                upper: "Phone",
+                                upper: "Mobile number",
                                 name: "phone" as const,
                                 type: "tel" as const,
                                 autoComplete: "tel" as const,
+                                required: false,
                                 ph: PRISMATECH_PHONE_DISPLAY,
                                 icon: (
                                   <svg className="size-[18px]" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" aria-hidden>
@@ -1687,6 +1706,9 @@ export default function PrismaAgencyLanding() {
                             <label key={field.name} htmlFor={field.id} className="block">
                               <span className="mb-1.5 block text-[10px] font-semibold uppercase tracking-[0.14em] text-[#7a7a7a]">
                                 {field.upper}
+                                {field.required ? null : (
+                                  <span className="ml-2 font-medium normal-case tracking-normal text-[#5c5c5c]">Optional</span>
+                                )}
                               </span>
                               <div className="flex items-stretch overflow-hidden rounded-xl border border-white/[0.1] bg-[#060606] transition focus-within:border-[rgba(188,19,254,0.45)] focus-within:ring-2 focus-within:ring-[rgba(188,19,254,0.2)]">
                                 <span
@@ -1698,7 +1720,7 @@ export default function PrismaAgencyLanding() {
                                 </span>
                                 <input
                                   id={field.id}
-                                  required
+                                  required={field.required}
                                   name={field.name}
                                   type={field.type}
                                   autoComplete={field.autoComplete}
@@ -1729,14 +1751,49 @@ export default function PrismaAgencyLanding() {
                               <textarea
                                 id="lead-message"
                                 name="message"
-                                rows={3}
+                                rows={2}
                                 value={leadForm.message}
                                 onChange={(e) => setLeadForm((f) => ({ ...f, message: e.target.value }))}
-                                className="min-h-[88px] flex-1 resize-y border-0 bg-transparent px-3 py-2.5 text-[15px] text-white outline-none placeholder:text-[#5c5c5c]"
+                                className="min-h-[64px] flex-1 resize-none border-0 bg-transparent px-3 py-2.5 text-[15px] text-white outline-none placeholder:text-[#5c5c5c]"
                                 placeholder="Goals, timeline, budget…"
                               />
                             </div>
                           </label>
+                          </div>
+
+                          <div className="mt-3 flex shrink-0 flex-col gap-3">
+                          <div className="flex items-start gap-3">
+                            <input
+                              id="lead-sms"
+                              name="smsConsent"
+                              type="checkbox"
+                              checked={leadForm.smsConsent}
+                              onChange={(e) => setLeadForm((f) => ({ ...f, smsConsent: e.target.checked }))}
+                              className="mt-0.5 size-4 shrink-0 cursor-pointer rounded border border-white/25 bg-[#060606] accent-[#bc13fe]"
+                            />
+                            <p className="text-[12px] leading-relaxed text-[#9a9a9a]">
+                              <label htmlFor="lead-sms" className="cursor-pointer">
+                                Yes, I agree to receive recurring automated marketing and informational text messages from
+                                PrismaTech Inc. at the mobile number provided. Consent is not a condition of purchase.
+                                Message frequency varies. Message and data rates may apply. Reply STOP to unsubscribe or
+                                HELP for help. See our{" "}
+                              </label>
+                              <Link
+                                href="/privacy-policy"
+                                className="text-[#d0d0d0] underline underline-offset-2 transition hover:text-white"
+                              >
+                                Privacy Policy
+                              </Link>{" "}
+                              and{" "}
+                              <Link
+                                href="/terms-of-service"
+                                className="text-[#d0d0d0] underline underline-offset-2 transition hover:text-white"
+                              >
+                                Terms of Service
+                              </Link>
+                              .
+                            </p>
+                          </div>
 
                           {leadSubmitError ? (
                             <p className="rounded-xl border border-red-500/35 bg-red-950/35 px-3 py-2.5 text-[13px] text-red-200">
@@ -1760,9 +1817,26 @@ export default function PrismaAgencyLanding() {
                               </svg>
                             ) : null}
                           </button>
-                          <p className="text-center text-[11px] leading-snug text-[#5a5a5a] md:text-left">
-                            By submitting, you agree we may contact you about PrismaTech services. No spam.
+                          <p className="text-center text-[12px] leading-relaxed text-[#9a9a9a] md:text-left">
+                            By submitting this form, you agree that PrismaTech Inc. may contact you by email about your
+                            inquiry and send you emails about merchant services, pricing programs and offers. You can
+                            unsubscribe at any time. See our{" "}
+                            <Link
+                              href="/privacy-policy"
+                              className="text-[#d0d0d0] underline underline-offset-2 transition hover:text-white"
+                            >
+                              Privacy Policy
+                            </Link>{" "}
+                            and{" "}
+                            <Link
+                              href="/terms-of-service"
+                              className="text-[#d0d0d0] underline underline-offset-2 transition hover:text-white"
+                            >
+                              Terms of Service
+                            </Link>
+                            .
                           </p>
+                          </div>
                         </form>
                       )}
                     </div>
