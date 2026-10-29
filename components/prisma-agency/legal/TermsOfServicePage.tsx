@@ -1,126 +1,175 @@
-import { LegalDocumentShell, LegalH2, LegalP, LegalUl } from "./LegalDocumentShell";
+import Link from "next/link";
+import { LegalDocumentShell, LegalH2, LegalP } from "./LegalDocumentShell";
+
+const linkClass =
+  "font-semibold text-white underline decoration-[#bc13fe]/50 underline-offset-2 hover:decoration-[#bc13fe]";
 
 export default function TermsOfServicePage() {
   return (
     <LegalDocumentShell
       title="Terms of Service"
-      subtitle="Rules and conditions for using the PrismaTech Inc. website and engaging our digital marketing services."
-      updated="May 1, 2026"
+      subtitle="Rules for using prismatechinc.com and communicating with PrismaTech Inc."
+      updated="October 28, 2026"
     >
       <section className="space-y-4">
-        <LegalH2>Agreement to terms</LegalH2>
+        <LegalH2>1. Agreement</LegalH2>
         <LegalP>
-          These Terms of Service (“Terms”) govern your access to and use of the website and online properties operated by
-          PrismaTech Inc. (“PrismaTech,” “we,” “us”). By accessing or using the site, you agree to these Terms. If you do
-          not agree, do not use the site. Separate written agreements may apply to specific projects or campaigns we run
-          for you.
+          These Terms of Service (“Terms”) govern your use of prismatechinc.com and your communications with PrismaTech
+          Inc. (“PrismaTech,” “we,” “us”), 949 Brandon Way, Fairfield, CA 94533. By using the site or submitting a form,
+          you agree to these Terms. If you do not agree, do not use the site.
         </LegalP>
       </section>
 
       <section className="space-y-4">
-        <LegalH2>Services and information</LegalH2>
+        <LegalH2>2. Our services</LegalH2>
         <LegalP>
-          Content on this site—including case studies, descriptions, and performance claims—is for general information
-          and marketing purposes. It does not guarantee specific business outcomes. Proposals, statements of work, or
-          contracts signed with PrismaTech supersede conflicting descriptions on the website.
+          PrismaTech offers merchant services, payment processing, cash discount and dual pricing programs, flat fee and
+          traditional pricing, POS terminals and equipment, and related support. Information on this site is general and
+          does not guarantee approval, pricing or savings. Merchant accounts are subject to underwriting and approval by
+          our processing and banking partners. Your merchant processing agreement, equipment agreement and any signed
+          contract govern your account and take priority over this site.
         </LegalP>
       </section>
 
       <section className="space-y-4">
-        <LegalH2>Acceptable use</LegalH2>
-        <LegalP>You agree not to:</LegalP>
-        <LegalUl>
-          <li>Use the site in any way that violates applicable law or infringes others’ rights.</li>
-          <li>Attempt to gain unauthorized access to our systems, other users, or third-party networks.</li>
-          <li>Transmit malware, spam, or harmful code; scrape or harvest data in bulk without our written consent.</li>
-          <li>Misrepresent your identity or affiliation when contacting us or submitting forms.</li>
-        </LegalUl>
-      </section>
-
-      <section className="space-y-4">
-        <LegalH2>Intellectual property</LegalH2>
+        <LegalH2>3. Pricing programs</LegalH2>
         <LegalP>
-          The site’s design, text, graphics, logos, and other materials are owned by PrismaTech or our licensors and are
-          protected by copyright, trademark, and other laws. You may not copy, modify, distribute, or create derivative
-          works without our prior written permission, except for temporary copies in your browser cache for personal,
-          non-commercial viewing.
+          Cash discount, dual pricing and surcharge programs must be run in line with card network rules and the laws of
+          your state. Some states restrict surcharging. You are responsible for posting required signage and disclosures
+          to your customers. We will provide guidance during setup, but this is not legal advice.
         </LegalP>
       </section>
 
       <section className="space-y-4">
-        <LegalH2>User submissions</LegalH2>
+        <LegalH2>4. Your submissions</LegalH2>
         <LegalP>
-          If you submit ideas, feedback, or materials through the site, you grant us a non-exclusive, worldwide,
-          royalty-free license to use, reproduce, and display them for the purpose of evaluating and providing our
-          services, unless we agree otherwise in writing. You represent that you have the rights to grant this license.
+          You agree that information you submit through our forms is accurate and belongs to you or your business. You
+          may not submit information about another person without their permission.
         </LegalP>
       </section>
 
       <section className="space-y-4">
-        <LegalH2>Third-party links</LegalH2>
+        <LegalH2>5. SMS program terms</LegalH2>
         <LegalP>
-          Our site may link to third-party websites or tools. We are not responsible for their content, privacy practices,
-          or availability. Your use of third-party services is at your own risk and subject to their terms.
+          <span className="font-semibold text-[#e8e8e8]">Program:</span> PrismaTech Inc. marketing and informational text
+          messages about merchant services, offers and account updates.
         </LegalP>
-      </section>
-
-      <section className="space-y-4">
-        <LegalH2>Disclaimer of warranties</LegalH2>
         <LegalP>
-          The site and all content are provided “as is” and “as available” without warranties of any kind, whether
-          express or implied, including implied warranties of merchantability, fitness for a particular purpose, and
-          non-infringement. We do not warrant that the site will be uninterrupted, error-free, or free of harmful
-          components.
+          <span className="font-semibold text-[#e8e8e8]">Opt-in:</span> you join by checking the SMS consent box on our
+          website form. Consent is not a condition of purchase.
         </LegalP>
-      </section>
-
-      <section className="space-y-4">
-        <LegalH2>Limitation of liability</LegalH2>
         <LegalP>
-          To the fullest extent permitted by law, PrismaTech and its directors, employees, and affiliates shall not be
-          liable for any indirect, incidental, special, consequential, or punitive damages, or any loss of profits,
-          data, or goodwill, arising from your use of the site or inability to use it—even if we have been advised of the
-          possibility of such damages. Our aggregate liability for claims relating to the site shall not exceed the
-          greater of one hundred U.S. dollars (USD $100) or the amounts you paid us specifically for site-related services
-          in the twelve months preceding the claim.
+          <span className="font-semibold text-[#e8e8e8]">Frequency:</span> message frequency varies.
         </LegalP>
-      </section>
-
-      <section className="space-y-4">
-        <LegalH2>Indemnity</LegalH2>
         <LegalP>
-          You agree to defend, indemnify, and hold harmless PrismaTech from any claims, damages, losses, or expenses
-          (including reasonable attorneys’ fees) arising from your violation of these Terms, misuse of the site, or
-          violation of third-party rights.
+          <span className="font-semibold text-[#e8e8e8]">Cost:</span> message and data rates may apply.
         </LegalP>
-      </section>
-
-      <section className="space-y-4">
-        <LegalH2>Governing law</LegalH2>
         <LegalP>
-          These Terms are governed by the laws of the State of California, United States, without regard to conflict-of-law
-          principles. Courts located in California shall have exclusive jurisdiction over disputes arising from these
-          Terms or the site, subject to any mandatory consumer protections in your place of residence.
+          <span className="font-semibold text-[#e8e8e8]">Opt-out:</span> reply STOP to any message. You will receive one
+          final confirmation, then no further texts unless you reply START.
         </LegalP>
-      </section>
-
-      <section className="space-y-4">
-        <LegalH2>Changes</LegalH2>
         <LegalP>
-          We may modify these Terms at any time by posting an updated version on this page and revising the “Last updated”
-          date. Material changes may be communicated through the site or by email where appropriate. Your continued use
-          after changes become effective constitutes acceptance.
-        </LegalP>
-      </section>
-
-      <section className="space-y-4">
-        <LegalH2>Contact</LegalH2>
-        <LegalP>
-          For questions about these Terms:{" "}
-          <a href="mailto:info@prismatechinc.com" className="font-semibold text-white underline decoration-[#bc13fe]/50 underline-offset-2 hover:decoration-[#bc13fe]">
+          <span className="font-semibold text-[#e8e8e8]">Help:</span> reply HELP, email{" "}
+          <a href="mailto:info@prismatechinc.com" className={linkClass}>
             info@prismatechinc.com
           </a>
+          , or call{" "}
+          <a href="tel:+17074398264" className={linkClass}>
+            +1 707 439 8264
+          </a>
           .
+        </LegalP>
+        <LegalP>
+          <span className="font-semibold text-[#e8e8e8]">Carriers:</span> carriers are not liable for delayed or
+          undelivered messages.
+        </LegalP>
+        <LegalP>
+          <span className="font-semibold text-[#e8e8e8]">Privacy:</span> see our{" "}
+          <Link href="/privacy-policy" className={linkClass}>
+            Privacy Policy
+          </Link>
+          . Mobile information and opt-in data are never shared with third parties for marketing.
+        </LegalP>
+      </section>
+
+      <section className="space-y-4">
+        <LegalH2>6. Email communications</LegalH2>
+        <LegalP>
+          By submitting a form, you agree to receive emails from PrismaTech about your request and our services. You can
+          unsubscribe at any time using the link in any marketing email.
+        </LegalP>
+      </section>
+
+      <section className="space-y-4">
+        <LegalH2>7. Acceptable use</LegalH2>
+        <LegalP>
+          You agree not to misuse the site, including attempting unauthorized access, sending malware or spam, scraping
+          data in bulk, or misrepresenting your identity or business.
+        </LegalP>
+      </section>
+
+      <section className="space-y-4">
+        <LegalH2>8. Intellectual property</LegalH2>
+        <LegalP>
+          The site’s content, logos and design belong to PrismaTech or its licensors. Product names such as Clover and
+          PAX are trademarks of their owners and are used only to describe compatible equipment.
+        </LegalP>
+      </section>
+
+      <section className="space-y-4">
+        <LegalH2>9. Third-party services</LegalH2>
+        <LegalP>
+          Our services may rely on third-party processors, equipment makers and software. Their terms apply to your use
+          of their products, and we are not responsible for their content or availability.
+        </LegalP>
+      </section>
+
+      <section className="space-y-4">
+        <LegalH2>10. Disclaimers</LegalH2>
+        <LegalP>
+          The site is provided “as is” without warranties of any kind. We do not guarantee that the site will be
+          uninterrupted or error-free.
+        </LegalP>
+      </section>
+
+      <section className="space-y-4">
+        <LegalH2>11. Limitation of liability</LegalH2>
+        <LegalP>
+          To the fullest extent allowed by law, PrismaTech is not liable for indirect, incidental or consequential
+          damages arising from use of this site. Liability under a merchant or equipment agreement is governed by that
+          agreement.
+        </LegalP>
+      </section>
+
+      <section className="space-y-4">
+        <LegalH2>12. Governing law</LegalH2>
+        <LegalP>
+          These Terms are governed by the laws of the State of California. Disputes will be heard in the state or federal
+          courts located in California.
+        </LegalP>
+      </section>
+
+      <section className="space-y-4">
+        <LegalH2>13. Changes</LegalH2>
+        <LegalP>
+          We may update these Terms by posting a new version on this page and changing the “Last updated” date.
+        </LegalP>
+      </section>
+
+      <section className="space-y-4">
+        <LegalH2>14. Contact</LegalH2>
+        <LegalP>
+          PrismaTech Inc., 949 Brandon Way, Fairfield, CA 94533
+          <br />
+          Email:{" "}
+          <a href="mailto:info@prismatechinc.com" className={linkClass}>
+            info@prismatechinc.com
+          </a>
+          {" · "}
+          Phone:{" "}
+          <a href="tel:+17074398264" className={linkClass}>
+            +1 707 439 8264
+          </a>
         </LegalP>
       </section>
     </LegalDocumentShell>

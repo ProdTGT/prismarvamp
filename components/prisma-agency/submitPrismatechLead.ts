@@ -9,6 +9,8 @@ export type LeadPayload = {
   phone: string;
   message: string;
   source: LeadSource;
+  /** Set only when the form shows the SMS consent checkbox. */
+  smsConsent?: boolean;
 };
 
 type FormSubmitSuccess = { success?: boolean; message?: string };
@@ -24,6 +26,9 @@ export async function submitPrismatechLead(payload: LeadPayload): Promise<{ ok: 
     email: payload.email.trim(),
     phone: payload.phone.trim(),
     message: payload.message.trim(),
+    ...(typeof payload.smsConsent === "boolean"
+      ? { sms_consent: payload.smsConsent ? "Yes" : "No" }
+      : {}),
     _subject: `Prismatech lead — ${payload.source.replace(/_/g, " ")}`,
     _template: "table",
   };
