@@ -252,6 +252,12 @@ export default function PrismaAgencyLanding() {
   }, [leadModalOpen, dismissLeadPopup]);
 
   useEffect(() => {
+    const open = () => openLeadPopup();
+    window.addEventListener("open-prismatech-lead", open);
+    return () => window.removeEventListener("open-prismatech-lead", open);
+  }, [openLeadPopup]);
+
+  useEffect(() => {
     if (!mobileNavOpen) return;
     const onKey = (e: KeyboardEvent) => {
       if (e.key === "Escape") setMobileNavOpen(false);

@@ -1,8 +1,8 @@
 import type { Metadata, Viewport } from "next";
 import "./globals.css";
 import "./prisma-home.css";
-import VeteransDayCorner from "@/components/VeteransDayCorner";
-import VeteransDayModal from "@/components/VeteransDayModal";
+import ThanksgivingCorner from "@/components/ThanksgivingCorner";
+import ThanksgivingModal from "@/components/ThanksgivingModal";
 
 export const metadata: Metadata = {
   title: "PrismaTech Inc.",
@@ -28,8 +28,8 @@ export default function RootLayout({
     <html lang="en">
       <body>
         {children}
-        <VeteransDayCorner />
-        <VeteransDayModal />
+        <ThanksgivingCorner />
+        <ThanksgivingModal />
       </body>
     </html>
   );
