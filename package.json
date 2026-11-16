@@ -2,11 +2,16 @@
   "name": "primatech",
   "version": "0.1.0",
   "private": true,
+  "overrides": {
+    "next": {
+      "postcss": "^8.5.23"
+    }
+  },
   "scripts": {
     "dev": "node init && next dev",
     "build": "node init && next build",
     "start": "node init && next start",
-    "lint": "next lint"
+    "lint": "eslint ."
   },
   "dependencies": {
     "@tailwindcss/postcss": "^4.3.3",
