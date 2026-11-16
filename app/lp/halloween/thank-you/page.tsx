@@ -1,12 +1,6 @@
-import type { Metadata } from "next";
-import { Plus_Jakarta_Sans } from "next/font/google";
-import HalloweenThankYou from "@/components/halloween/HalloweenThankYou";
 
-const jakarta = Plus_Jakarta_Sans({
-  subsets: ["latin"],
-  weight: ["400", "500", "600", "700", "800"],
-  variable: "--font-jakarta",
-});
+import type { Metadata } from "next";
+import HalloweenThankYou from "@/components/halloween/HalloweenThankYou";
 
 export const metadata: Metadata = {
   title: "Thank you | PrismaTech",
@@ -14,5 +8,5 @@ export const metadata: Metadata = {
 };
 
 export default function HalloweenThankYouPage() {
-  return <HalloweenThankYou fontClass={`${jakarta.variable} ${jakarta.className}`} />;
+  return <HalloweenThankYou fontClass="" />;
 }
